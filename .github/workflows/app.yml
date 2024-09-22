@@ -1,0 +1,56 @@
+name: App Build
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - .github/workflows/app.yml
+      - app/**
+
+jobs:
+  checkstyle:
+    name: checkstyle
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: gradle
+
+      - run: gradle ktLintFormat
+      - run: gradle ktLintCheck
+
+  build:
+    runs-on: ubuntu-latest
+    name: Build
+    permissions:
+      packages: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: gradle build
+        run: gradle app:build
+
+      - name: create jacoco report
+        run: gradle jacocoUnitTestReport
+
+      - name: jacoco
+        uses: madrapps/jacoco-report@v1.6.1
+        if: ( github.event_name != 'work_dispatch' )
+        with:
+          paths: ${{ github.workspace }}/app/build/reports/jacoco/jacocoUnitTestReport/jacocoUnitTestReport.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-coverage-overall: 30
+          min-coverage-changed-files: 30
+          title: Code Coverage
+          update-comment: true
