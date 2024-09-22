@@ -9,8 +9,11 @@ on:
 
 jobs:
   checkstyle:
-    name: checkstyle
     runs-on: ubuntu-latest
+    name: checkstyle
+    permissions:
+      packages: write
+      pull-requests: write
 
     steps:
       - uses: actions/checkout@v4
@@ -24,6 +27,7 @@ jobs:
       - run: gradle ktLintCheck
 
   build:
+    needs: checkstyle
     runs-on: ubuntu-latest
     name: Build
     permissions:
