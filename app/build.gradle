@@ -6,12 +6,20 @@ plugins {
 
 android {
     namespace 'ru.istu.smartdevices'
-    compileSdk 34
+    compileSdk 35
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.15"
+    }
 
     defaultConfig {
         applicationId "ru.istu.smartdevices"
-        minSdk 26
-        targetSdk 34
+        minSdk 35
+        targetSdk 35
         versionCode 1
         versionName "1.0"
 
@@ -42,6 +50,12 @@ dependencies {
     implementation libs.dagger
     kapt libs.dagger.compiler
 
+    implementation libs.androidx.wear
+    implementation libs.androidx.ui
+    implementation libs.androidx.material
+    implementation libs.androidx.foundation
+    implementation libs.androidx.activity.compose
+    implementation libs.androidx.compose.material
     implementation libs.androidx.core.ktx
     implementation libs.androidx.appcompat
     implementation libs.material
