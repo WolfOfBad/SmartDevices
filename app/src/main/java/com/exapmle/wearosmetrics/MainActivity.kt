@@ -1,27 +1,40 @@
-
 package ru.istu.smartdevices
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.wear.ambient.AmbientModeSupport
 import androidx.wear.compose.material.MaterialTheme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import ru.istu.smartdevices.bluetooth.BluetoothViewModel
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity(), AmbientModeSupport.AmbientCallbackProvider {
-    private var isConnected = true // Заглушка для статуса подключения
+    private lateinit var viewModel: BluetoothViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this)[BluetoothViewModel::class.java]
+
         setContent {
             MaterialTheme {
+                val metricsState = viewModel.metrics.collectAsState()
+                val connectionState = viewModel.connectionState.collectAsState()
+
+                val metrics = metricsState.value
+                val isConnected = connectionState.value
+
                 MetricsScreen(
-                    steps = "0000",
-                    pulse = "00",
-                    distance = "0.0",
-                    sleep = "0ч 0м",
+                    steps = metrics.steps,
+                    pulse = metrics.pulse,
+                    distance = metrics.distance,
+                    sleep = metrics.sleep,
                     connectionStatus = if (isConnected) "Подключено" else "Отключено",
                 )
             }
@@ -31,14 +44,9 @@ class MainActivity : ComponentActivity(), AmbientModeSupport.AmbientCallbackProv
         lifecycleScope.launch {
             while (true) {
                 delay(5000)
-                updateMetrics()
+                viewModel.updateMetrics()
             }
         }
-    }
-
-    private fun updateMetrics() {
-        // Заглушка для обновления данных
-        // В реальном приложении здесь может быть запрос к датчикам или базе данных
     }
 
     override fun getAmbientCallback(): AmbientModeSupport.AmbientCallback {
