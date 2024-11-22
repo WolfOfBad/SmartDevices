@@ -1,12 +1,18 @@
-
 package com.example.wearosmetrics.bluetooth
 
 import kotlinx.coroutines.flow.StateFlow
-import ru.istu.smartdevices.bluetooth.BluetoothService
 
 interface BluetoothServiceInterface {
+    data class Metrics(
+        val steps: String,
+        val pulse: String,
+        val distance: String,
+        val sleep: String
+    )
+
+    val metrics: StateFlow<Metrics>
     val connectionState: StateFlow<Boolean>
-    val metrics: StateFlow<BluetoothService.Metrics>
+
     fun fetchMetrics()
     fun connect()
     fun disconnect()
