@@ -10,10 +10,10 @@ class MockBluetoothService @Inject constructor() : BluetoothServiceInterface {
 
     private val _metrics = MutableStateFlow(
         BluetoothServiceInterface.Metrics(
-            steps = "1234",
-            pulse = "80",
-            distance = "2.5",
-            sleep = "6ч 45м"
+            steps = "0000",
+            pulse = "60",
+            distance = "0.0",
+            sleep = "0ч 0м"
         )
     )
     override val metrics: StateFlow<BluetoothServiceInterface.Metrics> get() = _metrics
@@ -21,13 +21,23 @@ class MockBluetoothService @Inject constructor() : BluetoothServiceInterface {
     private val _connectionState = MutableStateFlow(true)
     override val connectionState: StateFlow<Boolean> get() = _connectionState
 
+    private fun getHeartRate(oldHeartRate: Int) : String{
+        var pulse = (metrics.value.pulse.toInt() + (-5..5).random())
+        if (pulse < 60) {
+            return "60"
+        }
+        if (pulse > 120) {
+            return "120"
+        }
+        return pulse.toString()
+    }
     override fun fetchMetrics() {
         // Симуляция обновления данных каждые 5 секунд
         _metrics.value = BluetoothServiceInterface.Metrics(
-            steps = (1000..5000).random().toString(),
-            pulse = (60..120).random().toString(),
-            distance = "${(1..10).random()}.${(0..9).random()}",
-            sleep = "${(4..8).random()}ч ${(0..59).random()}м"
+            steps = (metrics.value.steps.toInt() + (1..5).random()).toString(),
+            pulse = getHeartRate(metrics.value.pulse.toInt()),
+            distance = String.format("%.2f", metrics.value.distance.toDouble() + 0.01),
+            sleep = "7ч 30м"
         )
     }
 

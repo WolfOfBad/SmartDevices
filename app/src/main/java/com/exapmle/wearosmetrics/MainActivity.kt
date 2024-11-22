@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity(), AmbientModeSupport.AmbientCallbackProv
         // Обновление данных каждые 5 секунд
         lifecycleScope.launch {
             while (true) {
-                delay(5000)
+                delay(1000)
                 viewModel.updateMetrics()
             }
         }
