@@ -7,13 +7,15 @@ interface BluetoothServiceInterface {
         val steps: String,
         val pulse: String,
         val distance: String,
-        val sleep: String
+        val sleep: String,
     )
 
     val metrics: StateFlow<Metrics>
     val connectionState: StateFlow<Boolean>
 
     fun fetchMetrics()
+
     fun connect()
+
     fun disconnect()
 }

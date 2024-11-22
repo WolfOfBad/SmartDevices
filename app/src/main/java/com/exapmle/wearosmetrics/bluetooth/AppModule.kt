@@ -12,10 +12,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class AppModule {
-
     @Binds
     @Singleton
-    abstract fun bindBluetoothService(
-        mockBluetoothService: MockBluetoothService
-    ): BluetoothServiceInterface
+    abstract fun bindBluetoothService(mockBluetoothService: MockBluetoothService): BluetoothServiceInterface
 }
