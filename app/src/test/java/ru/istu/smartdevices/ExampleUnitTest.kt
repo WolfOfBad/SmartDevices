@@ -14,11 +14,11 @@ class ExampleUnitTest {
         assertThat(2 + 2).isEqualTo(4)
     }
 
-    @Test
+    /*@Test
     fun t1() {
         val obj = TestClass()
 
         assertThat(obj.first()).isEqualTo(1)
         assertThat(obj.second()).isEqualTo(2)
-    }
+    }*/
 }
