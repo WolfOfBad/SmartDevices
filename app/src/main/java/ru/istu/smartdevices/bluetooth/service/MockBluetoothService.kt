@@ -1,7 +1,8 @@
-package com.example.wearosmetrics.bluetooth
+package ru.istu.smartdevices.bluetooth.service
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -24,7 +25,7 @@ class MockBluetoothService
         override val connectionState: StateFlow<Boolean> get() = _connectionState
 
         private fun getHeartRate(oldHeartRate: Int): String {
-            var pulse = (metrics.value.pulse.toInt() + (-5..5).random())
+            val pulse = (oldHeartRate + (-5..5).random())
             if (pulse < 60) {
                 return "60"
             }
@@ -39,7 +40,7 @@ class MockBluetoothService
                 BluetoothServiceInterface.Metrics(
                     steps = (metrics.value.steps.toInt() + (1..5).random()).toString(),
                     pulse = getHeartRate(metrics.value.pulse.toInt()),
-                    distance = String.format("%.2f", metrics.value.distance.toDouble() + 0.01),
+                    distance = String.format(Locale.US, "%.2f", metrics.value.distance.toDouble() + 0.01),
                     sleep = "7ч 30м",
                 )
         }

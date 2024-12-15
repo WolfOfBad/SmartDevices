@@ -2,9 +2,9 @@ package ru.istu.smartdevices.bluetooth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.wearosmetrics.bluetooth.BluetoothServiceInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import ru.istu.smartdevices.bluetooth.service.BluetoothServiceInterface
 import javax.inject.Inject
 
 @HiltViewModel

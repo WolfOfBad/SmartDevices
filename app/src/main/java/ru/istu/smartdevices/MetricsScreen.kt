@@ -1,4 +1,4 @@
-package com.example.wearosmetrics.ui
+package ru.istu.smartdevices
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,13 +20,13 @@ fun MetricsScreen(
     distance: String,
     sleep: String,
     connectionStatus: String,
-    showHighPulseWarning: Boolean
+    showHighPulseWarning: Boolean,
 ) {
     Column(
         modifier =
-        Modifier
-            .fillMaxSize()
-            .padding(16.dp),
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -42,7 +42,10 @@ fun MetricsScreen(
 
         if (showHighPulseWarning) {
             Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Внимание: Ваш пульс слишком высок!", color = androidx.compose.ui.graphics.Color.Red)
+            Text(
+                text = "Внимание: Ваш пульс слишком высок!",
+                color = androidx.compose.ui.graphics.Color.Red,
+            )
         }
     }
 }

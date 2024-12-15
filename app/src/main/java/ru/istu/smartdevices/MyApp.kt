@@ -1,4 +1,3 @@
-
 package ru.istu.smartdevices
 
 import android.app.Application

@@ -1,12 +1,11 @@
+package ru.istu.smartdevices.bluetooth
 
-package com.example.wearosmetrics.di
-
-import com.example.wearosmetrics.bluetooth.BluetoothServiceInterface
-import com.example.wearosmetrics.bluetooth.MockBluetoothService
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import ru.istu.smartdevices.bluetooth.service.BluetoothServiceInterface
+import ru.istu.smartdevices.bluetooth.service.MockBluetoothService
 import javax.inject.Singleton
 
 @Module

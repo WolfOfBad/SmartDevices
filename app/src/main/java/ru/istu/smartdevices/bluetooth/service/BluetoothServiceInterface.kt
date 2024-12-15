@@ -1,4 +1,4 @@
-package com.example.wearosmetrics.bluetooth
+package ru.istu.smartdevices.bluetooth.service
 
 import kotlinx.coroutines.flow.StateFlow
 
