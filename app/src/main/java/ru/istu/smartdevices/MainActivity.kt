@@ -16,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.istu.smartdevices.bluetooth.BluetoothViewModel
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity :
@@ -31,9 +32,14 @@ class MainActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Timber.i("MainActivity created")
+
         viewModel = ViewModelProvider(this)[BluetoothViewModel::class.java]
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         createNotificationChannel()
+
+        Timber.d("Notification channel created: $CHANNEL_ID")
 
         setContent {
             MaterialTheme {
@@ -62,11 +68,22 @@ class MainActivity :
                     viewModel.metrics.value.pulse
                         .toIntOrNull() ?: 0
                 showHighPulseWarning.value = pulse > 99
+
+                Timber.w("Pulse: $pulse, High pulse warning: ${showHighPulseWarning.value}")
             }
         }
     }
 
-    override fun getAmbientCallback(): AmbientModeSupport.AmbientCallback = object : AmbientModeSupport.AmbientCallback() {}
+    override fun getAmbientCallback(): AmbientModeSupport.AmbientCallback =
+        object : AmbientModeSupport.AmbientCallback() {
+            override fun onEnterAmbient(ambientDetails: Bundle?) {
+                Timber.i("Entered ambient mode")
+            }
+
+            override fun onExitAmbient() {
+                Timber.i("Exited ambient mode")
+            }
+        }
 
     private fun createNotificationChannel() {
         val name = "High Pulse Notification"
@@ -77,5 +94,7 @@ class MainActivity :
                 description = descriptionText
             }
         notificationManager.createNotificationChannel(channel)
+
+        Timber.d("Notification channel created: $CHANNEL_ID")
     }
 }
