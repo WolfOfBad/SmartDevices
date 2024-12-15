@@ -20,12 +20,13 @@ fun MetricsScreen(
     distance: String,
     sleep: String,
     connectionStatus: String,
+    showHighPulseWarning: Boolean
 ) {
     Column(
         modifier =
-            Modifier
-                .fillMaxSize()
-                .padding(16.dp),
+        Modifier
+            .fillMaxSize()
+            .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -38,5 +39,10 @@ fun MetricsScreen(
         Text(text = "Сон: $sleep")
         Spacer(modifier = Modifier.height(8.dp))
         Text(text = "Статус подключения: $connectionStatus")
+
+        if (showHighPulseWarning) {
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(text = "Внимание: Ваш пульс слишком высок!", color = androidx.compose.ui.graphics.Color.Red)
+        }
     }
 }

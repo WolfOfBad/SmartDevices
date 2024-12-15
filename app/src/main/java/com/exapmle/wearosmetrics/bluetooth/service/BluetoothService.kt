@@ -30,9 +30,8 @@ class BluetoothService
             _connectionState.value = false
         }
 
-        // Метод для обновления данных с устройства
+
         fun fetchMetrics() {
-            // TODO: Получение данных BLE, здесь будут вызовы к устройству
             _metrics.value =
                 Metrics(
                     steps = "1234",

@@ -13,7 +13,7 @@ class MockBluetoothService
             MutableStateFlow(
                 BluetoothServiceInterface.Metrics(
                     steps = "0000",
-                    pulse = "60",
+                    pulse = "100",
                     distance = "0.0",
                     sleep = "0ч 0м",
                 ),
@@ -35,7 +35,6 @@ class MockBluetoothService
         }
 
         override fun fetchMetrics() {
-            // Симуляция обновления данных каждые 5 секунд
             _metrics.value =
                 BluetoothServiceInterface.Metrics(
                     steps = (metrics.value.steps.toInt() + (1..5).random()).toString(),
