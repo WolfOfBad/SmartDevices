@@ -2,39 +2,50 @@ package ru.istu.smartdevices
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
-@Composable
 @Suppress("ktlint:standard:function-naming")
+@Composable
 fun MetricsScreen(
     steps: String,
     pulse: String,
     distance: String,
     sleep: String,
     connectionStatus: String,
+    showHighPulseWarning: Boolean,
 ) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(
-            text = connectionStatus,
-            fontSize = 18.sp,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(bottom = 16.dp),
-        )
-        Text(text = "Кол-во шагов: $steps", fontSize = 16.sp)
-        Text(text = "Пульс: $pulse", fontSize = 16.sp)
-        Text(text = "Дистанция: $distance", fontSize = 16.sp)
-        Text(text = "Сон: $sleep", fontSize = 16.sp)
+        Text(text = "Шаги: $steps")
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text = "Пульс: $pulse")
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text = "Дистанция: $distance км")
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text = "Сон: $sleep")
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text = "Статус подключения: $connectionStatus")
+
+        if (showHighPulseWarning) {
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = "Внимание: Ваш пульс слишком высок!",
+                color = androidx.compose.ui.graphics.Color.Red,
+            )
+        }
     }
 }
